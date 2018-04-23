@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 16:55:05 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/23 13:46:57 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:18:40 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ typedef struct	s_mandelbrot
 {
 	int			col;
 	int			row;
+	double		x;
+	double		y;
 	double		zoom;
-	double		nav_x;
-	double		nav_y;
+	double		dir_x;
+	double		dir_y;
 	double		c_re;
 	double		c_im;
 	double		x_new;
