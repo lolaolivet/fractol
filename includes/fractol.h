@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 16:55:05 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/24 14:37:00 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/04/24 18:30:41 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "../minilibx/mlx.h"
 # include "../libft/libft.h"
-# define WIDTH 600
-# define HEIGHT 600
+# define WIDTH 800
+# define HEIGHT 800
 # define MAX 50
 
 typedef struct		s_mandelbrot
@@ -46,5 +46,7 @@ typedef struct		s_data
 void				new_image(t_data *d, int w, int h);
 void				reload_image(t_data *d);
 void				fill_pixel(t_data *d, int x, int y, int color);
+int					deal_mandelbrot(int button, int x, int y, void *param);
+void				draw_mandelbrot(t_data *d, int i);
 
 #endif

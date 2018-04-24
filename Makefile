@@ -6,7 +6,7 @@
 #    By: lolivet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 15:20:22 by lolivet           #+#    #+#              #
-#    Updated: 2018/04/24 14:36:49 by lolivet          ###   ########.fr        #
+#    Updated: 2018/04/24 15:10:03 by lolivet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CC_FLAGS	= -Werror -Wextra -Wall -g3
 LIB_FLAGS	= -lm -L $(LIB_PATH) -lft
 MLX_FLAGS	= -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 
-SRC_NAME	= mandelbrot.c images.c
+SRC_NAME	= mandelbrot.c images.c positions.c
 INC_NAME	= fractol.h 
 
 SRCS		= $(addprefix $(SRC_PATH), $(SRC_NAME))
