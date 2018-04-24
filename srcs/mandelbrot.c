@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 16:29:29 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/23 18:56:39 by lolivet          ###   ########.fr       */
+/*   Created: 2018/04/24 14:38:30 by lolivet           #+#    #+#             */
+/*   Updated: 2018/04/24 14:57:10 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_data(t_data *d, t_mandelbrot *m)
 	d->mlx_ptr = mlx_init();
 	d->win_ptr = mlx_new_window(d->mlx_ptr, WIDTH, HEIGHT, "Fract'ol");
 	d->f = m;
-	d->f->zoom = 1.0;
+	d->f->zoom = 1.1;
 	d->f->dir_x = 0;
 	d->f->dir_y = 0;
 	d->f->col = 0;
@@ -34,11 +34,13 @@ int		init_c(t_data *d)
 		* d->f->zoom;
 	d->f->x = 0.0;
 	d->f->y = 0.0;
+//	printf("zoom init: %f\n", d->f->zoom);
 	return (0);
 }
 
 void	draw_mandelbrot(t_data *d, int i)
 {
+//	printf("zoom: %f\n", d->f->zoom);
 	while (d->f->row < HEIGHT)
 	{
 		while (d->f->col < WIDTH)
@@ -64,16 +66,25 @@ void	draw_mandelbrot(t_data *d, int i)
 		d->f->col = 0;
 		d->f->row++;
 	}
+	d->f->row = 0;
+	d->f->col = 0;
 	mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->img_ptr, 0, 0);
 }
 
 int		deal_mouse(int button, int x, int y, void *param)
 {
-	printf("button: %d - x: %d - y: %d\n", button, x, y);
-	if (button == 4)
+	(void)x;
+	(void)y;
+	if (button == 4 || button == 6)
 	{
 		reload_image((t_data *)param);
 		((t_data *)param)->f->zoom = ((t_data *)param)->f->zoom + 0.1;
+		draw_mandelbrot((t_data*)param, 0);
+	}
+	if (button == 5 || button == 7)
+	{
+		reload_image((t_data *)param);
+		((t_data *)param)->f->zoom = ((t_data *)param)->f->zoom - 0.1;
 		draw_mandelbrot((t_data*)param, 0);
 	}
 	return (0);
