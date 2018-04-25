@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 16:55:05 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/24 18:30:41 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/04/25 16:04:56 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 # include "../libft/libft.h"
 # define WIDTH 800
 # define HEIGHT 800
-# define MAX 50
+# define MAX 150
 
-typedef struct		s_mandelbrot
+typedef struct		s_fractal
 {
+	char			*name;
 	int				col;
 	int				row;
 	double			x;
@@ -32,7 +33,7 @@ typedef struct		s_mandelbrot
 	double			c_im;
 	double			x_new;
 	int				color;
-}					t_mandelbrot;
+}					t_fractal;
 
 typedef struct		s_data
 {
@@ -40,13 +41,17 @@ typedef struct		s_data
 	void			*win_ptr;
 	void			*img_ptr;
 	char			*img_string;
-	t_mandelbrot	*f;
+	t_fractal		*f;
 }					t_data;
 
 void				new_image(t_data *d, int w, int h);
 void				reload_image(t_data *d);
 void				fill_pixel(t_data *d, int x, int y, int color);
-int					deal_mandelbrot(int button, int x, int y, void *param);
+int					deal_mouse(int button, int x, int y, void *param);
+int					deal_key(int keycode, void *param);
 void				draw_mandelbrot(t_data *d, int i);
+void				draw_julia(t_data *d, int i);
+void				ft_error(char *str);
+void				destroy_exit(t_data *d);
 
 #endif

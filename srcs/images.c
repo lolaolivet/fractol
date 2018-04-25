@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 18:23:35 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/23 18:41:19 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/04/25 14:12:17 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,12 @@ void	reload_image(t_data *d)
 	mlx_destroy_image(d->mlx_ptr, d->img_ptr);
 	new_image(d, WIDTH, HEIGHT);
 }
-/*
+
 void	destroy_exit(t_data *d)
 {
 	mlx_destroy_image(d->mlx_ptr, d->img_ptr);
-	free(d->pos);
-	free(d->coord);
 	exit(-1);
 }
-*/
 
 void	new_image(t_data *d, int w, int h)
 {
