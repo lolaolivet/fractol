@@ -15,15 +15,38 @@
 
 # include "../minilibx/mlx.h"
 # include "../libft/libft.h"
-# define WIDTH 800
-# define HEIGHT 800
+# include <pthread.h>
+
+# define W_WIN 1200
+# define H_WIN 1200
+# define W_IMG 1200
+# define H_IMG 1200
+# define X_IMG ((W_WIN - W_IMG) / 2)
+# define Y_IMG ((H_WIN - H_IMG) / 2)
+
 # define MAX 150
 
-typedef struct		s_fractal
+# define NUM_THREADS 6
+
+// typedef struct		s_args
+// {
+// 	int				start;
+// 	int				end;
+// 	t_data			*d;
+// }					t_args;
+
+typedef struct		s_data
 {
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*img_ptr;
+	char			*img_string;
+}					t_data;
+
+typedef struct		s_args
+{
+	int				index;
 	char			*name;
-	int				col;
-	int				row;
 	double			x;
 	double			y;
 	double			zoom;
@@ -33,24 +56,18 @@ typedef struct		s_fractal
 	double			c_im;
 	double			x_new;
 	int				color;
-}					t_fractal;
-
-typedef struct		s_data
-{
-	void			*mlx_ptr;
-	void			*win_ptr;
-	void			*img_ptr;
-	char			*img_string;
-	t_fractal		*f;
-}					t_data;
+	int				start;
+	int				end;
+	t_data			d;
+}					t_args;
 
 void				new_image(t_data *d, int w, int h);
 void				reload_image(t_data *d);
 void				fill_pixel(t_data *d, int x, int y, int color);
 int					deal_mouse(int button, int x, int y, void *param);
 int					deal_key(int keycode, void *param);
-void				draw_mandelbrot(t_data *d, int i);
-void				draw_julia(t_data *d, int i);
+void				draw_mandelbrot(t_args *a, int i);
+void				draw_julia(t_args *a, int i);
 void				ft_error(char *str);
 void				destroy_exit(t_data *d);
 

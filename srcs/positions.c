@@ -12,53 +12,82 @@
 
 #include "fractol.h"
 
-void	draw_fractal(t_data *d)
+#define PARAMS ((t_args *)param)
+
+void	draw_fractal(t_args *a)
 {
-	printf("name: %s\n", d->f->name);
-	if (!(ft_strcmp(d->f->name, "Mandelbrot")) ||
-		!(ft_strcmp(d->f->name, "mandelbrot")))
-		draw_mandelbrot(d, 0);
-	if (!(ft_strcmp(d->f->name, "Julia")) ||
-		!(ft_strcmp(d->f->name, "julia")))
-		draw_julia(d, 0);
+	if (!(ft_strcmp(a->name, "Mandelbrot"))
+		|| !(ft_strcmp(a->name, "mandelbrot")))
+		draw_mandelbrot(a, 0);
+//	if (!(ft_strcmp(d->f.name, "Julia"))
+//		|| !(ft_strcmp(d->f.name, "julia")))
+//		draw_julia(d, 0);
 }
 
-void	define_direction(t_data *d, int x, int y)
+void	define_direction(t_args *a, int x, int y)
 {
+	a->dir_x = (x - (W_IMG / 2)) / 100;
+	a->dir_y = (((H_IMG / 2) - y) / 100) * -1;
+	printf("x: %f; y: %f\n", a->dir_x, a->dir_y);
+	/*
 	if (x - (WIDTH / 2) < 0)
-		d->f->dir_x = d->f->dir_x - 0.1;
+		d->f.dir_x = d->f.dir_x - 0.1;
 	if (x - (WIDTH / 2) > 0)
-		d->f->dir_x = d->f->dir_x + 0.1;
+		d->f.dir_x = d->f.dir_x + 0.1;
 	if (y - (HEIGHT / 2) < 0)
-		d->f->dir_y = d->f->dir_y + 0.1;
+		d->f.dir_y = d->f.dir_y + 0.1;
 	if (x - (HEIGHT / 2) > 0)
-		d->f->dir_y = d->f->dir_y - 0.1;
-	printf("dx: %f ; dy %f\n", d->f->dir_x, d->f->dir_y);
+		d->f.dir_y = d->f.dir_y - 0.1;
+	*/
 }
 
 int		deal_key(int keycode, void *param)
 {
 	if (keycode == 53)
-		destroy_exit((t_data *)param);
+		destroy_exit(&(PARAMS)->d);
+	if (keycode == 126)
+	{
+		reload_image(&(PARAMS)->d);
+		PARAMS->dir_y = PARAMS->dir_y - 0.1;
+		draw_fractal(PARAMS);
+	}
+	if (keycode == 125)
+	{
+		reload_image(&(PARAMS)->d);
+		PARAMS->dir_y = PARAMS->dir_y + 0.1;
+		draw_fractal(PARAMS);
+	}	
+	if (keycode == 124)
+	{
+		reload_image(&(PARAMS)->d);
+		PARAMS->dir_x = PARAMS->dir_x + 0.1;
+		draw_fractal(PARAMS);
+	}	
+	if (keycode == 123)
+	{
+		reload_image(&(PARAMS)->d);
+		PARAMS->dir_x = PARAMS->dir_x - 0.1;
+		draw_fractal(PARAMS);
+	}
 	return (0);
 }
 
 int		deal_mouse(int button, int x, int y, void *param)
 {
-	printf("button: %d -- x: %d ; y: %d\n", button, x, y);
-	define_direction((t_data *)param, x, y);
-	printf("n2: %s\n", ((t_data *)param)->f->name);
+	(void)x;
+	(void)y;
+//	define_direction((t_data *)param, x, y);
 	if (button == 4 || button == 6)
 	{
-		reload_image((t_data *)param);
-		((t_data *)param)->f->zoom = ((t_data *)param)->f->zoom + 0.1;
-		draw_fractal((t_data*)param);
+		reload_image(&(PARAMS)->d);
+		PARAMS->zoom = PARAMS->zoom + 0.1;
+		draw_fractal(PARAMS);
 	}
 	if (button == 5 || button == 7)
 	{
-		reload_image((t_data *)param);
-		((t_data *)param)->f->zoom = ((t_data *)param)->f->zoom - 0.1;
-		draw_fractal((t_data*)param);
+		reload_image(&(PARAMS)->d);
+		PARAMS->zoom = PARAMS->zoom - 0.1;
+		draw_fractal(PARAMS);
 	}
 	return (0);
 }
