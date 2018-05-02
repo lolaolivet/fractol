@@ -14,6 +14,7 @@
 
 void	reload_image(t_data *d)
 {
+	printf("mlx_ptr2: %p - img_string2: %p\n", d->mlx_ptr, d->img_string);
 	mlx_destroy_image(d->mlx_ptr, d->img_ptr);
 	new_image(d, W_IMG, H_IMG);
 }

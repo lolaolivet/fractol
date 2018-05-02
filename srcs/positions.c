@@ -47,7 +47,8 @@ int		deal_key(int keycode, void *param)
 		destroy_exit(&(PARAMS)->d);
 	if (keycode == 126)
 	{
-		reload_image(&(PARAMS)->d);
+		printf("&mlx_ptr: %p - &img_string: %p\n", (PARAMS->d.mlx_ptr), PARAMS->d.img_string);
+		reload_image(&(PARAMS->d));
 		PARAMS->dir_y = PARAMS->dir_y - 0.1;
 		draw_fractal(PARAMS);
 	}
