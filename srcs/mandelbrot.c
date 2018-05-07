@@ -56,40 +56,10 @@ void		*thread_mandelbrot(void *arg)
 		else
 		{
 			ARGS->color = (j * 255) / MAX;
-			fill_pixel(&(ARGS)->d, (i % W_IMG), (i / H_IMG), ARGS->color);
+			fill_pixel(&(ARGS->d), (i % W_IMG), (i / H_IMG), ARGS->color);
 		}
 		i++;
 	}
-	return (NULL);
-	/*
-	while (((t_args *)arg)->row < ((t_args *)arg)->end / W_IMG)
-	{
-		while (((t_args *)arg)->col < ((t_args *)arg)->end % H_IMG)
-		{
-			i = init_c(((t_args *)arg));
-			while ((((t_args *)arg)->x * ((t_args *)arg)->x)
-					+ (((t_args *)arg)->y * ((t_args *)arg)->y) <= 4 && i < MAX)
-			{
-				calculate_xy(((t_args *)arg));
-				i++;
-			}
-			if (i == MAX)
-				fill_pixel(&((t_args *)arg)->d, ((t_args *)arg)->col,
-					((t_args *)arg)->row, 0x000000);
-			else
-			{
-				((t_args *)arg)->color = (i * 255) / MAX;
-				fill_pixel(&((t_args *)arg)->d, ((t_args *)arg)->col,
-					((t_args *)arg)->row, ((t_args *)arg)->color);
-			}
-			((t_args *)arg)->col++;
-		}
-		((t_args *)arg)->col = 0;
-		((t_args *)arg)->row++;
-	}
-	((t_args *)arg)->row = 0;
-	((t_args *)arg)->col = 0;
-	*/
 	return (NULL);
 }
 
@@ -103,6 +73,7 @@ void		draw_mandelbrot(t_args *a, int i)
 
 	(void)i;
 	index = 0;
+	printf("mlx_ptr_draw: %p - img_string_draw: %p\n", a->d.mlx_ptr, a->d.img_string);	
 	while (index < NUM_THREADS)
 	{
 		ft_bzero(&thread_args[index], sizeof(t_args));

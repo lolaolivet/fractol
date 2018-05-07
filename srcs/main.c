@@ -27,11 +27,14 @@ t_args	detect_fractal(t_data *d, char *str)
 
 	ft_bzero(&a, sizeof(t_args));
 	init_fractal(&a);
+	a.name = str;
 	a.d = *d;
 	if (!(ft_strcmp(str, "Mandelbrot")) || !(ft_strcmp(str, "mandelbrot")))
 		draw_mandelbrot(&a, 0);
-//	if (!(ft_strcmp(str, "Julia")) || !(ft_strcmp(str, "julia")))
-//		draw_julia(a, 0);
+	if (!(ft_strcmp(str, "Julia")) || !(ft_strcmp(str, "julia")))
+		draw_julia(&a, 0);
+	if (!(ft_strcmp(str, "Buddhabrot")) || !(ft_strcmp(str, "buddhabrot")))
+		draw_julia(&a, 0);
 	return (a);
 }
 
@@ -47,8 +50,9 @@ int		main(int argc, char **argv)
 	d.win_ptr = mlx_new_window(d.mlx_ptr, W_WIN, H_WIN, "Fract'ol");
 	new_image(&d, W_IMG, H_IMG);
 	a = detect_fractal(&d, argv[1]);
-	mlx_hook(a.d.win_ptr, 4, (1L << 12), &deal_mouse, (void *)&(a.d));
-	mlx_hook(a.d.win_ptr, 2, (1L << 0), &deal_key, (void *)&(a.d));
+	mlx_hook(a.d.win_ptr, 4, (1L << 12), &deal_mouse, (void *)&(a));
+	mlx_hook(a.d.win_ptr, 2, (1L << 0), &deal_key, (void *)&(a));
+	printf("mlx_ptr_main: %p - img_string_main: %p\n", a.d.mlx_ptr, a.d.img_string);			
 	mlx_loop(a.d.mlx_ptr);
 	return (0);
 }

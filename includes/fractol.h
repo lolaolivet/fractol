@@ -17,10 +17,10 @@
 # include "../libft/libft.h"
 # include <pthread.h>
 
-# define W_WIN 1200
-# define H_WIN 1200
-# define W_IMG 1200
-# define H_IMG 1200
+# define W_WIN 800
+# define H_WIN 800
+# define W_IMG 800
+# define H_IMG 800
 # define X_IMG ((W_WIN - W_IMG) / 2)
 # define Y_IMG ((H_WIN - H_IMG) / 2)
 

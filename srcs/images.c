@@ -14,7 +14,6 @@
 
 void	reload_image(t_data *d)
 {
-	printf("mlx_ptr2: %p - img_string2: %p\n", d->mlx_ptr, d->img_string);
 	mlx_destroy_image(d->mlx_ptr, d->img_ptr);
 	new_image(d, W_IMG, H_IMG);
 }
@@ -35,6 +34,7 @@ void	new_image(t_data *d, int w, int h)
 	h = H_IMG;
 	d->img_ptr = mlx_new_image(d->mlx_ptr, w, h);
 	d->img_string = mlx_get_data_addr(d->img_ptr, &(bpp), &(s_l), &(endian));
+	
 }
 
 void	fill_pixel(t_data *d, int x, int y, int color)

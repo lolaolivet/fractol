@@ -19,9 +19,9 @@ void	draw_fractal(t_args *a)
 	if (!(ft_strcmp(a->name, "Mandelbrot"))
 		|| !(ft_strcmp(a->name, "mandelbrot")))
 		draw_mandelbrot(a, 0);
-//	if (!(ft_strcmp(d->f.name, "Julia"))
-//		|| !(ft_strcmp(d->f.name, "julia")))
-//		draw_julia(d, 0);
+	if (!(ft_strcmp(a->name, "Julia"))
+		|| !(ft_strcmp(a->name, "julia")))
+		draw_julia(a, 0);
 }
 
 void	define_direction(t_args *a, int x, int y)
@@ -43,11 +43,11 @@ void	define_direction(t_args *a, int x, int y)
 
 int		deal_key(int keycode, void *param)
 {
+	printf("key: %d\n", keycode);
 	if (keycode == 53)
 		destroy_exit(&(PARAMS)->d);
 	if (keycode == 126)
 	{
-		printf("&mlx_ptr: %p - &img_string: %p\n", (PARAMS->d.mlx_ptr), PARAMS->d.img_string);
 		reload_image(&(PARAMS->d));
 		PARAMS->dir_y = PARAMS->dir_y - 0.1;
 		draw_fractal(PARAMS);
@@ -90,5 +90,6 @@ int		deal_mouse(int button, int x, int y, void *param)
 		PARAMS->zoom = PARAMS->zoom - 0.1;
 		draw_fractal(PARAMS);
 	}
+	printf("zoom: %f\n", PARAMS->zoom);
 	return (0);
 }
