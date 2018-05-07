@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   julia.c                                            :+:      :+:    :+:   */
+/*   burningship.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 14:45:54 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/25 16:13:46 by lolivet          ###   ########.fr       */
+/*   Created: 2018/05/07 16:30:47 by lolivet           #+#    #+#             */
+/*   Updated: 2018/05/07 16:30:58 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#define ARGS ((t_args * )arg)
+#define ARGS ((t_args *)arg)
 
-void		init_julia(t_args *a)
+void	init_ship(t_args *a)
 {
-	a->x1 = -1.3;
-	a->y1 = -1.3;
-	a->zoom = 300;
+	a->x1 = -2.5;
+	a->y1 = -2.5 ;
+	a->zoom = 200;
 }
 
 static int	init_c(t_args *a, int i)
@@ -27,21 +27,21 @@ static int	init_c(t_args *a, int i)
 
 	x = (i % W_IMG);
 	y = (i / H_IMG);
-	a->c_re = 0.285;
-	a->c_im = 0.01;
-	a->x = x / a->zoom + a->x1;
-	a->y = y / a->zoom + a->y1;
+	a->c_re = x / a->zoom + a->x1;
+	a->c_im = y / a->zoom + a->y1;
+	a->x = 0.0;
+	a->y = 0.0;
 	return (0);
 }
 
 static void	calculate_xy(t_args *a)
 {
-	a->x_new = (a->x * a->x) - (a->y * a->y) + a->c_re;
-	a->y = (2 * a->x * a->y) + a->c_im;
+	a->x_new = fabs(a->x * a->x) - fabs(a->y * a->y) + a->c_re;
+	a->y = fabs(2 * a->x * a->y) + a->c_im;
 	a->x = a->x_new;
 }
 
-void		*thread_julia(void *arg)
+void		*thread_ship(void *arg)
 {
 	int		i;
 	int		j;
@@ -50,13 +50,13 @@ void		*thread_julia(void *arg)
 	while (i < ARGS->end)
 	{
 		j = init_c(ARGS, i);
-		while ((ARGS->x * ARGS->x) + (ARGS->y * ARGS->y) < 4 && j < MAX)
+		while ((ARGS->x * ARGS->x) + (ARGS->y * ARGS->y) <= 4 && j < MAX)
 		{
 			calculate_xy(ARGS);
 			j++;
 		}
 		if (j == MAX)
-			fill_pixel(&(ARGS->d), (i % W_IMG), (i / H_IMG), 0x0000000);
+			fill_pixel(&(ARGS->d), (i % W_IMG), (i / H_IMG), 0x000000);
 		else
 		{
 			ARGS->color = (j * 255) / MAX;
@@ -67,7 +67,7 @@ void		*thread_julia(void *arg)
 	return (NULL);
 }
 
-void		draw_julia(t_args *a, int i)
+void		draw_ship(t_args *a, int i)
 {
 	pthread_t	thr[NUM_THREADS];
 	t_args		thr_args[NUM_THREADS];
@@ -80,7 +80,7 @@ void		draw_julia(t_args *a, int i)
 		thr_args[i].index = i;
 		thr_args[i].start = i * ((W_IMG * H_IMG) / NUM_THREADS);
 		thr_args[i].end = ((W_IMG * H_IMG) / NUM_THREADS) + thr_args[i].start;
-		res = pthread_create(&thr[i], NULL, thread_julia, &thr_args[i]);
+		res = pthread_create(&thr[i], NULL, thread_ship, &thr_args[i]);
 		i++;
 	}
 	i = 0;

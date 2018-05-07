@@ -11,8 +11,14 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-
 #define ARGS ((t_args *)arg)
+
+void	init_mandelbrot(t_args *a)
+{
+	a->x1 = -2.1;
+	a->y1 = -1.2;
+	a->zoom = 300;
+}
 
 static int	init_c(t_args *a, int i)
 {
@@ -21,10 +27,8 @@ static int	init_c(t_args *a, int i)
 
 	x = (i % W_IMG);
 	y = (i / H_IMG);
-	a->c_re = ((((x - (W_IMG / 2.0)) * 6.0) / W_IMG) - a->dir_x)
-		* a->zoom;
-	a->c_im = ((((y - (H_IMG / 2.0)) * 6.0) / H_IMG) - a->dir_y)
-		* a->zoom;
+	a->c_re = x / a->zoom + a->x1;
+	a->c_im = y / a->zoom + a->y1;
 	a->x = 0.0;
 	a->y = 0.0;
 	return (0);
@@ -65,34 +69,26 @@ void		*thread_mandelbrot(void *arg)
 
 void		draw_mandelbrot(t_args *a, int i)
 {
-	pthread_t	threads[NUM_THREADS];
-//	int			thread_args[NUM_THREADS];
-	t_args		thread_args[NUM_THREADS];
-	int			result_code;
-	int			index;
+	pthread_t	thr[NUM_THREADS];
+	t_args		thr_args[NUM_THREADS];
+	int			res;
 
-	(void)i;
-	index = 0;
-	printf("mlx_ptr_draw: %p - img_string_draw: %p\n", a->d.mlx_ptr, a->d.img_string);	
-	while (index < NUM_THREADS)
+	while (i < NUM_THREADS)
 	{
-		ft_bzero(&thread_args[index], sizeof(t_args));
-//		thread_args[index] = index;
-		printf("Creating thread %d\n", index);
-		thread_args[index] = *a;
-		thread_args[index].index = index;
-		thread_args[index].start = index * ((W_IMG * H_IMG) / NUM_THREADS);
-		thread_args[index].end = ((W_IMG * H_IMG) / NUM_THREADS) + thread_args[index].start;
-		result_code = pthread_create(&threads[index], NULL, thread_mandelbrot, &thread_args[index]);
-		index++;		
+		ft_bzero(&thr_args[i], sizeof(t_args));
+		thr_args[i] = *a;
+		thr_args[i].index = i;
+		thr_args[i].start = i * ((W_IMG * H_IMG) / NUM_THREADS);
+		thr_args[i].end = ((W_IMG * H_IMG) / NUM_THREADS) + thr_args[i].start;
+		res = pthread_create(&thr[i], NULL, thread_mandelbrot, &thr_args[i]);
+		i++;
 	}
-	index = 0;
-	while (index < NUM_THREADS)
+	i = 0;
+	while (i < NUM_THREADS)
 	{
-		result_code = pthread_join(threads[index], NULL);
-		printf("Thread %d completed\n", index);
-		index++;
+		res = pthread_join(thr[i], NULL);
+		i++;
 	}
-	mlx_put_image_to_window(a->d.mlx_ptr, a->d.win_ptr, a->d.img_ptr, X_IMG, Y_IMG);
-	printf("Finish\n");
-}	
+	mlx_put_image_to_window(a->d.mlx_ptr, a->d.win_ptr, a->d.img_ptr, X_IMG,
+		Y_IMG);
+}

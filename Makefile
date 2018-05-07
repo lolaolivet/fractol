@@ -24,7 +24,8 @@ LIB_FLAGS		= -lm -L $(LIB_PATH) -lft
 THRD_FLAGS	= -lpthread
 MLX_FLAGS		= -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 
-SRC_NAME		= main.c mandelbrot.c julia.c buddhabrot.c images.c positions.c error.c
+SRC_NAME		= main.c mandelbrot.c julia.c burningship.c images.c positions.c \
+					error.c
 INC_NAME		= fractol.h 
 
 SRCS			= $(addprefix $(SRC_PATH), $(SRC_NAME))
