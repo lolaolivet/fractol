@@ -69,6 +69,7 @@ void				reload_image(t_data *d);
 void				fill_pixel(t_data *d, int x, int y, int color);
 int					deal_mouse(int button, int x, int y, void *param);
 int					deal_key(int keycode, void *param);
+int					deal_pointer(int x, int y, void *param);
 void				draw_mandelbrot(t_args *a, int i);
 void				init_mandelbrot(t_args *a);
 void				draw_julia(t_args *a, int i);

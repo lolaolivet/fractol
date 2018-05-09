@@ -52,6 +52,7 @@ int		main(int argc, char **argv)
 	new_image(&d, W_IMG, H_IMG);
 	a = detect_fractal(&d, argv[1]);
 	mlx_hook(a.d.win_ptr, 4, (1L << 12), &deal_mouse, (void *)&(a));
+	mlx_hook(a.d.win_ptr, 6, (1L << 6), &deal_pointer, (void*)&(a));
 	mlx_hook(a.d.win_ptr, 2, (1L << 0), &deal_key, (void *)&(a));
 	mlx_loop(a.d.mlx_ptr);
 	return (0);

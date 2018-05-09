@@ -85,6 +85,21 @@ int		deal_mouse(int button, int x, int y, void *param)
 		PARAMS->zoom = PARAMS->zoom - 50;
 		draw_fractal(PARAMS);
 	}
-	printf("zoom: %f\n", PARAMS->zoom);
+	return (0);
+}
+
+int		deal_pointer(int x, int y, void *param)
+{
+	(void)y;
+	if ((!(ft_strcmp(PARAMS->name, "Julia"))
+		|| !(ft_strcmp(PARAMS->name, "julia"))) && ((x >= 0 && x <= W_IMG)
+		&& (y >= 0 && y <= H_IMG)))
+	{
+		reload_image(&(PARAMS->d));
+		PARAMS->c_re = (double) x / W_IMG;
+		PARAMS->c_im = (double) x / W_IMG;
+		printf("x: %d - c_re: %f\n", x, PARAMS->c_re);
+		draw_julia(PARAMS, 0);
+	}
 	return (0);
 }
