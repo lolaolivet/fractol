@@ -20,22 +20,15 @@ t_args	detect_fractal(t_data *d, char *str)
 	a.name = str;
 	a.d = *d;
 	if (!(ft_strcmp(str, "Mandelbrot")) || !(ft_strcmp(str, "mandelbrot")))
-	{
 		init_mandelbrot(&a);		
-		draw_mandelbrot(&a, 0);
-	}
 	else if (!(ft_strcmp(str, "Julia")) || !(ft_strcmp(str, "julia")))
-	{
 		init_julia(&a);
-		draw_julia(&a, 0);
-	}
 	else if (!(ft_strcmp(str, "Burningship")) || !(ft_strcmp(str, "burningship")))
-	{
 		init_ship(&a);
-		draw_ship(&a, 0);
-	}
+	else if (!(ft_strcmp(str, "Douady")) || !(ft_strcmp(str, "douady")))
+		init_douady(&a);
 	else
-		ft_error("Usage: ./fractol <Mandelbrot | Julia | Burningship>");		
+		ft_error("Usage: ./fractol <Mandelbrot | Julia | Burningship | Douady>");		
 	return (a);
 }
 
@@ -45,7 +38,7 @@ int		main(int argc, char **argv)
 	t_args	a;
 
 	if (argc < 2 || argc > 3)
-		ft_error("Usage: ./fractol <Mandelbrot | Julia | Burningship>");
+		ft_error("Usage: ./fractol <Mandelbrot | Julia | Burningship | Douady>>");
 	ft_bzero(&d, sizeof(t_data));
 	d.mlx_ptr = mlx_init();
 	d.win_ptr = mlx_new_window(d.mlx_ptr, W_WIN, H_WIN, "Fract'ol");

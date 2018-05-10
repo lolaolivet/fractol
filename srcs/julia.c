@@ -18,8 +18,10 @@ void		init_julia(t_args *a)
 	a->x1 = -1.3;
 	a->y1 = -1.3;
 	a->zoom = 300;
-	a->c_re = 0.285; // 0.285
-	a->c_im = 0.01; // 0.01
+	a->c_re = 0.285;
+	a->c_im = 0.01;
+	a->block = 0;
+	draw_julia(a, 0);
 }
 
 static int	init_c(t_args *a, int i)

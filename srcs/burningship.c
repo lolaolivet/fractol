@@ -13,10 +13,10 @@
 #include "fractol.h"
 #define ARGS ((t_args *)arg)
 
-void	init_ship(t_args *a)
+void		init_ship(t_args *a)
 {
 	a->x1 = -2.5;
-	a->y1 = -2.5 ;
+	a->y1 = -2.5;
 	a->zoom = 200;
 }
 
@@ -62,6 +62,7 @@ static int	color_ship(int j)
 	}
 	return (colors[k]);
 }
+
 void		*thread_ship(void *arg)
 {
 	int		i;

@@ -61,6 +61,8 @@ typedef struct		s_args
 	int				color;
 	int				start;
 	int				end;
+	int				block;
+	int				max_iter;
 	t_data			d;
 }					t_args;
 
@@ -76,6 +78,8 @@ void				draw_julia(t_args *a, int i);
 void				init_julia(t_args *a);
 void				draw_ship(t_args *a, int i);
 void				init_ship(t_args *a);
+void				draw_douady(t_args *a, int i);
+void				init_douady(t_args *a);
 void				ft_error(char *str);
 void				destroy_exit(t_data *d);
 
