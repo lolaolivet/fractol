@@ -27,6 +27,9 @@ void	draw_fractal(t_args *a)
 	if (!(ft_strcmp(a->name, "Douady"))
 		|| !(ft_strcmp(a->name, "douady")))
 		draw_douady(a, 0);
+	if (!(ft_strcmp(a->name, "Tricorn"))
+		|| !(ft_strcmp(a->name, "tricorn")))
+		draw_tricorn(a, 0);
 }
 
 int		deal_key(int keycode, void *param)
@@ -39,12 +42,11 @@ int		deal_key(int keycode, void *param)
 			PARAMS->block = 1;
 		else
 			PARAMS->block = 0;
-		printf("in - block = %d\n", PARAMS->block);		
 	}
 	if (keycode == 126 || keycode == 125)
 	{
 		reload_image(&(PARAMS)->d);
-		PARAMS->y1 = (keycode == 126) ? PARAMS->y1 - 0.1 : PARAMS->y1 + 0.1;
+		PARAMS->y1 = (keycode == 126) ? PARAMS->y1 + 0.1 : PARAMS->y1 - 0.1;
 		draw_fractal(PARAMS);
 	}
 	if (keycode == 124 | keycode == 123)
@@ -53,6 +55,18 @@ int		deal_key(int keycode, void *param)
 		PARAMS->x1 = (keycode == 124) ? PARAMS->x1 - 0.1 : PARAMS->x1 + 0.1;		
 		draw_fractal(PARAMS);
 	}
+	if (keycode == 24 || keycode == 27)
+	{
+		reload_image(&(PARAMS)->d);
+		PARAMS->zoom = (keycode == 24) ? PARAMS->zoom + 50 : PARAMS->zoom - 50;
+		draw_fractal(PARAMS);
+	}
+	if (keycode == 69 || keycode == 78)
+	{
+			reload_image(&(PARAMS)->d);
+			PARAMS->iter = (keycode == 69) ? PARAMS->iter + 10 : PARAMS->iter - 10;
+			draw_fractal(PARAMS);
+	}
 	return (0);
 }
 
@@ -60,16 +74,10 @@ int		deal_mouse(int button, int x, int y, void *param)
 {
 	(void)x;
 	(void)y;
-	if (button == 4 || button == 6)
+	if (button == 4 || button == 5)
 	{
 		reload_image(&(PARAMS)->d);
-		PARAMS->zoom = PARAMS->zoom + 50;
-		draw_fractal(PARAMS);
-	}
-	if (button == 5 || button == 7)
-	{
-		reload_image(&(PARAMS)->d);
-		PARAMS->zoom = PARAMS->zoom - 50;
+		PARAMS->zoom = (button == 4) ? PARAMS->zoom / 10 : PARAMS->zoom / 10;
 		draw_fractal(PARAMS);
 	}
 	return (0);
@@ -82,7 +90,6 @@ int		deal_pointer(int x, int y, void *param)
 		|| !(ft_strcmp(PARAMS->name, "julia"))) && ((x >= 0 && x <= W_IMG)
 		&& (y >= 0 && y <= H_IMG)))
 	{
-		printf("block: %d\n", PARAMS->block);		
 		reload_image(&(PARAMS->d));
 		PARAMS->c_re = ((double)x - W_IMG / 2) / (W_IMG / 2);
 		PARAMS->c_im = ((double)y - H_IMG / 2) / (H_IMG / 2);

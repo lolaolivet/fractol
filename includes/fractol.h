@@ -27,7 +27,7 @@
 
 # define MAX 150
 
-# define NUM_THREADS 6
+# define NUM_THREADS 8
 
 // typedef struct		s_args
 // {
@@ -52,6 +52,8 @@ typedef struct		s_args
 	double			x2;
 	double			y2;
 	double			y1;
+	int				dir_x;
+	int				dir_y;
 	double			zoom;
 	double			c_re;
 	double			c_im;
@@ -62,7 +64,7 @@ typedef struct		s_args
 	int				start;
 	int				end;
 	int				block;
-	int				max_iter;
+	int				iter;
 	t_data			d;
 }					t_args;
 
@@ -80,6 +82,10 @@ void				draw_ship(t_args *a, int i);
 void				init_ship(t_args *a);
 void				draw_douady(t_args *a, int i);
 void				init_douady(t_args *a);
+void				draw_tricorn(t_args *a, int i);
+void				init_tricorn(t_args *a);
+int					color_fractal(int j, int max);
+void				display_interface(t_data *d);
 void				ft_error(char *str);
 void				destroy_exit(t_data *d);
 
