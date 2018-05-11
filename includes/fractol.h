@@ -85,7 +85,7 @@ void				init_douady(t_args *a);
 void				draw_tricorn(t_args *a, int i);
 void				init_tricorn(t_args *a);
 int					color_fractal(int j, int max);
-void				display_interface(t_data *d);
+//void				display_interface(t_data *d);
 void				ft_error(char *str);
 void				destroy_exit(t_data *d);
 

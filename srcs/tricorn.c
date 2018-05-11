@@ -13,7 +13,7 @@
 #include "fractol.h"
 #define ARGS ((t_args *)arg)
 
-void	init_tricorn(t_args *a)
+void		init_tricorn(t_args *a)
 {
 	a->x1 = -2.1;
 	a->y1 = -2.1;
@@ -47,12 +47,14 @@ void		*thread_tricorn(void *arg)
 		j = init_c(ARGS, i);
 		while ((ARGS->x * ARGS->x) + (ARGS->y * ARGS->y) <= 4 && j < ARGS->iter)
 		{
-			ARGS->x_new = (ARGS->x * ARGS->x) - (ARGS->y * ARGS->y) + ARGS->c_re;
+			ARGS->x_new = (ARGS->x * ARGS->x) - (ARGS->y * ARGS->y) +
+				ARGS->c_re;
 			ARGS->y = (-2 * ARGS->x * ARGS->y) + ARGS->c_im;
 			ARGS->x = ARGS->x_new;
 			j++;
 		}
-		fill_pixel(&(ARGS->d), (i % W_IMG), (i / W_IMG), color_fractal(j, ARGS->iter));
+		fill_pixel(&(ARGS->d), (i % W_IMG), (i / W_IMG),
+			color_fractal(j, ARGS->iter));
 		i++;
 	}
 	return (NULL);
@@ -81,7 +83,6 @@ void		draw_tricorn(t_args *a, int i)
 		i++;
 	}
 	mlx_clear_window(a->d.mlx_ptr, a->d.win_ptr);
-	display_interface(&(a->d));	
 	mlx_put_image_to_window(a->d.mlx_ptr, a->d.win_ptr, a->d.img_ptr, X_IMG,
 		Y_IMG);
 }

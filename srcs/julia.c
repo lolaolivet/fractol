@@ -48,12 +48,14 @@ void		*thread_julia(void *arg)
 		j = init_c(ARGS, i);
 		while ((ARGS->x * ARGS->x) + (ARGS->y * ARGS->y) < 4 && j < ARGS->iter)
 		{
-			ARGS->x_new = (ARGS->x * ARGS->x) - (ARGS->y * ARGS->y) + ARGS->c_re;
+			ARGS->x_new = (ARGS->x * ARGS->x) - (ARGS->y * ARGS->y) +
+				ARGS->c_re;
 			ARGS->y = (2 * ARGS->x * ARGS->y) + ARGS->c_im;
 			ARGS->x = ARGS->x_new;
 			j++;
 		}
-		fill_pixel(&(ARGS->d), (i % W_IMG), (i / H_IMG), color_fractal(j, ARGS->iter));
+		fill_pixel(&(ARGS->d), (i % W_IMG), (i / H_IMG),
+			color_fractal(j, ARGS->iter));
 		i++;
 	}
 	return (NULL);

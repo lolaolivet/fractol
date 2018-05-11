@@ -13,7 +13,16 @@
 #include "fractol.h"
 #define PARAMS ((t_args *)param)
 
-void	draw_fractal(t_args *a)
+/*
+** if (keycode == 24 || keycode == 27)
+** {
+** reload_image(&(PARAMS)->d);
+** PARAMS->zoom = (keycode == 24) ? PARAMS->zoom + 50 : PARAMS->zoom - 50;
+** draw_fractal(PARAMS);
+** }
+*/
+
+void		draw_fractal(t_args *a)
 {
 	if (!(ft_strcmp(a->name, "Mandelbrot"))
 		|| !(ft_strcmp(a->name, "mandelbrot")))
@@ -32,17 +41,24 @@ void	draw_fractal(t_args *a)
 		draw_tricorn(a, 0);
 }
 
-int		deal_key(int keycode, void *param)
+static void	ft_iter(int keycode, t_args *a)
+{
+	if (a->iter < 1000 && a->iter > 20)
+	{
+		reload_image(&(a)->d);
+		a->iter = (keycode == 69) ? a->iter + 10 : a->iter - 10;
+		draw_fractal(a);
+	}
+	else
+		a->iter = (a->iter >= 1000) ? 999 : 21;
+}
+
+int			deal_key(int keycode, void *param)
 {
 	if (keycode == 53)
 		destroy_exit(&(PARAMS)->d);
 	if (keycode == 49)
-	{
-		if (PARAMS->block == 0)
-			PARAMS->block = 1;
-		else
-			PARAMS->block = 0;
-	}
+		PARAMS->block = (PARAMS->block == 0) ? 1 : 0;
 	if (keycode == 126 || keycode == 125)
 	{
 		reload_image(&(PARAMS)->d);
@@ -52,25 +68,15 @@ int		deal_key(int keycode, void *param)
 	if (keycode == 124 | keycode == 123)
 	{
 		reload_image(&(PARAMS)->d);
-		PARAMS->x1 = (keycode == 124) ? PARAMS->x1 - 0.1 : PARAMS->x1 + 0.1;		
-		draw_fractal(PARAMS);
-	}
-	if (keycode == 24 || keycode == 27)
-	{
-		reload_image(&(PARAMS)->d);
-		PARAMS->zoom = (keycode == 24) ? PARAMS->zoom + 50 : PARAMS->zoom - 50;
+		PARAMS->x1 = (keycode == 124) ? PARAMS->x1 - 0.1 : PARAMS->x1 + 0.1;
 		draw_fractal(PARAMS);
 	}
 	if (keycode == 69 || keycode == 78)
-	{
-			reload_image(&(PARAMS)->d);
-			PARAMS->iter = (keycode == 69) ? PARAMS->iter + 10 : PARAMS->iter - 10;
-			draw_fractal(PARAMS);
-	}
+		ft_iter(keycode, PARAMS);
 	return (0);
 }
 
-int		deal_mouse(int button, int x, int y, void *param)
+int			deal_mouse(int button, int x, int y, void *param)
 {
 	(void)x;
 	(void)y;
@@ -83,7 +89,7 @@ int		deal_mouse(int button, int x, int y, void *param)
 	return (0);
 }
 
-int		deal_pointer(int x, int y, void *param)
+int			deal_pointer(int x, int y, void *param)
 {
 	(void)y;
 	if (PARAMS->block == 0 && (!(ft_strcmp(PARAMS->name, "Julia"))

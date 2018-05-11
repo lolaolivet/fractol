@@ -13,7 +13,7 @@
 #include "fractol.h"
 #define ARGS ((t_args *)arg)
 
-void	init_mandelbrot(t_args *a)
+void		init_mandelbrot(t_args *a)
 {
 	a->x1 = -2.1;
 	a->y1 = -1.2;
@@ -36,10 +36,10 @@ static int	init_c(t_args *a, int i)
 	return (0);
 }
 
-void		*thread_mandelbrot(void *arg)
+static void	*thread_mandelbrot(void *arg)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	i = ARGS->start;
 	while (i < ARGS->end)
@@ -47,12 +47,14 @@ void		*thread_mandelbrot(void *arg)
 		j = init_c(ARGS, i);
 		while ((ARGS->x * ARGS->x) + (ARGS->y * ARGS->y) <= 4 && j < ARGS->iter)
 		{
-			ARGS->x_new = (ARGS->x * ARGS->x) - (ARGS->y * ARGS->y) + ARGS->c_re;
+			ARGS->x_new = (ARGS->x * ARGS->x) - (ARGS->y * ARGS->y) +
+				ARGS->c_re;
 			ARGS->y = (2 * ARGS->x * ARGS->y) + ARGS->c_im;
 			ARGS->x = ARGS->x_new;
 			j++;
 		}
-		fill_pixel(&(ARGS->d), (i % W_IMG), (i / W_IMG), color_fractal(j, ARGS->iter));
+		fill_pixel(&(ARGS->d), (i % W_IMG), (i / W_IMG),
+			color_fractal(j, ARGS->iter));
 		i++;
 	}
 	return (NULL);
@@ -71,7 +73,8 @@ void		draw_mandelbrot(t_args *a, int i)
 		thr_args[i].index = i;
 		thr_args[i].start = i * ((W_IMG * H_IMG) / NUM_THREADS);
 		thr_args[i].end = (i + 1) * ((W_IMG * H_IMG) / NUM_THREADS);
-		res = pthread_create(&(thr[i]), NULL, thread_mandelbrot, &(thr_args[i]));
+		res = pthread_create(&(thr[i]), NULL, thread_mandelbrot,
+			&(thr_args[i]));
 		i++;
 	}
 	i = 0;
@@ -81,7 +84,6 @@ void		draw_mandelbrot(t_args *a, int i)
 		i++;
 	}
 	mlx_clear_window(a->d.mlx_ptr, a->d.win_ptr);
-	display_interface(&(a->d));	
 	mlx_put_image_to_window(a->d.mlx_ptr, a->d.win_ptr, a->d.img_ptr, X_IMG,
 		Y_IMG);
 }
