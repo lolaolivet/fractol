@@ -39,6 +39,9 @@ void		draw_fractal(t_args *a)
 	if (!(ft_strcmp(a->name, "Tricorn"))
 		|| !(ft_strcmp(a->name, "tricorn")))
 		draw_tricorn(a, 0);
+	if (!(ft_strcmp(a->name, "Multibrot"))
+		|| !(ft_strcmp(a->name, "multibrot")))
+		draw_multibrot(a, 0);
 }
 
 static void	ft_iter(int keycode, t_args *a)
@@ -82,16 +85,21 @@ int			deal_mouse(int button, int x, int y, void *param)
 	(void)y;
 	if (button == 4 || button == 5)
 	{
-		reload_image(&(PARAMS)->d);
-		PARAMS->zoom = (button == 4) ? PARAMS->zoom / 10 : PARAMS->zoom / 10;
-		draw_fractal(PARAMS);
+		if (PARAMS->zoom > 50 && PARAMS->zoom < 2147483647)
+		{
+			reload_image(&(PARAMS)->d);
+			PARAMS->zoom = (button == 5) ? PARAMS->zoom + 10 :
+				PARAMS->zoom - 10;
+			draw_fractal(PARAMS);
+		}
+		else
+			PARAMS->zoom = (PARAMS->zoom >= 2147483647) ? 2147483646 : 51;
 	}
 	return (0);
 }
 
 int			deal_pointer(int x, int y, void *param)
 {
-	(void)y;
 	if (PARAMS->block == 0 && (!(ft_strcmp(PARAMS->name, "Julia"))
 		|| !(ft_strcmp(PARAMS->name, "julia"))) && ((x >= 0 && x <= W_IMG)
 		&& (y >= 0 && y <= H_IMG)))
