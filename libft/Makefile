@@ -6,7 +6,7 @@
 #    By: lolivet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/09 18:23:36 by lolivet           #+#    #+#              #
-#    Updated: 2018/04/13 16:46:37 by lolivet          ###   ########.fr        #
+#    Updated: 2018/05/14 17:12:38 by lolivet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,6 @@ SRCS = ./ft_memset.c	\
 	  ./ft_split_whitespaces.c \
 	  ./ft_htoi.c		\
 	  ./ft_puterror.c	\
-	  ./ft_itoa_base.c	\
 
 OBJS = $(SRCS:.c=.o)
 

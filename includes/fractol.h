@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 16:55:05 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/25 16:04:56 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/05/14 17:23:44 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int					color_fractal(int j, int max);
 void				display_interface(t_data *d);
 void				ft_error(char *str);
 void				destroy_exit(t_data *d);
+int					ft_exit(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:28:48 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/25 16:09:00 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/05/14 17:24:11 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int		main(int argc, char **argv)
 	a = detect_fractal(&(d), argv[1]);
 	mlx_hook(a.d.win_ptr, 4, (1L << 12), &deal_mouse, (void *)&(a));
 	mlx_hook(a.d.win_ptr, 6, (1L << 6), &deal_pointer, (void*)&(a));
+	mlx_hook(a.d.win_ptr, 17, 0, ft_exit, 0);
 	mlx_hook(a.d.win_ptr, 2, (1L << 0), &deal_key, (void *)&(a));
 	mlx_loop(a.d.mlx_ptr);
 	return (0);

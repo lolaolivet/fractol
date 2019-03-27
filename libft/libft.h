@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 18:24:19 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/13 16:46:48 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/05/14 17:12:49 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ int					get_next_line(const int fd, char **line);
 char				**ft_split_whitespaces(char *str);
 int					ft_htoi(char *str, int *result, int c, int i);
 void				ft_puterror(char *str);
-char				*ft_itoa_base(int value, int base);
 
 #endif

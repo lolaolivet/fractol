@@ -6,7 +6,7 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:44:58 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/25 13:49:27 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/05/14 17:23:17 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,10 @@ void	ft_error(char *str)
 {
 	ft_puterror(str);
 	exit(0);
+}
+
+int		ft_exit(void)
+{
+	exit(-1);
+	return (0);
 }

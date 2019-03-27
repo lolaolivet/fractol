@@ -6,21 +6,12 @@
 /*   By: lolivet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 15:04:56 by lolivet           #+#    #+#             */
-/*   Updated: 2018/04/25 16:08:59 by lolivet          ###   ########.fr       */
+/*   Updated: 2018/05/14 17:06:06 by lolivet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #define PARAMS ((t_args *)param)
-
-/*
-** if (keycode == 24 || keycode == 27)
-** {
-** reload_image(&(PARAMS)->d);
-** PARAMS->zoom = (keycode == 24) ? PARAMS->zoom + 50 : PARAMS->zoom - 50;
-** draw_fractal(PARAMS);
-** }
-*/
 
 void		draw_fractal(t_args *a)
 {
@@ -65,13 +56,15 @@ int			deal_key(int keycode, void *param)
 	if (keycode == 126 || keycode == 125)
 	{
 		reload_image(&(PARAMS)->d);
-		PARAMS->y1 = (keycode == 126) ? PARAMS->y1 + 0.1 : PARAMS->y1 - 0.1;
+		PARAMS->y1 = (keycode == 126) ? PARAMS->y1 + (10 / PARAMS->zoom) :
+			PARAMS->y1 - (10 / PARAMS->zoom);
 		draw_fractal(PARAMS);
 	}
 	if (keycode == 124 | keycode == 123)
 	{
 		reload_image(&(PARAMS)->d);
-		PARAMS->x1 = (keycode == 124) ? PARAMS->x1 - 0.1 : PARAMS->x1 + 0.1;
+		PARAMS->x1 = (keycode == 124) ? PARAMS->x1 - (10 / PARAMS->zoom) :
+			PARAMS->x1 + (10 / PARAMS->zoom);
 		draw_fractal(PARAMS);
 	}
 	if (keycode == 69 || keycode == 78)
@@ -88,8 +81,8 @@ int			deal_mouse(int button, int x, int y, void *param)
 		if (PARAMS->zoom > 50 && PARAMS->zoom < 2147483647)
 		{
 			reload_image(&(PARAMS)->d);
-			PARAMS->zoom = (button == 5) ? PARAMS->zoom + 10 :
-				PARAMS->zoom - 10;
+			PARAMS->zoom = (button == 5) ? PARAMS->zoom * 1.1 :
+				PARAMS->zoom / 1.1;
 			draw_fractal(PARAMS);
 		}
 		else
